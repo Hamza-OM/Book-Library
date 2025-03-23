@@ -1,0 +1,53 @@
+@model LibraryManagementSystem.Models.Book
+
+@{
+    ViewBag.Title = "Delete Book";
+}
+
+<h2>Delete Book</h2>
+
+<div class="alert alert-danger">
+    <h4>Are you sure you want to delete this book?</h4>
+    <p>This action cannot be undone.</p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h4>Book Details</h4>
+    </div>
+    <div class="card-body">
+        <dl class="dl-horizontal">
+            <dt>Title</dt>
+            <dd>@Model.Title</dd>
+
+            <dt>Author</dt>
+            <dd>@Model.Author</dd>
+
+            <dt>Genre</dt>
+            <dd>@Model.GenreName</dd>
+
+            <dt>Page Count</dt>
+            <dd>@Model.PageCount</dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.BookID)
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-danger">Delete</button>
+                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        }
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('form').on('submit', function() {
+            $(this).find('button[type="submit"]').prop('disabled', true).text('Deleting...');
+        });
+    });
+</script> 

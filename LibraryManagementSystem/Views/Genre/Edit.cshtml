@@ -1,0 +1,65 @@
+@model LibraryManagementSystem.Models.Genre
+
+@{
+    ViewBag.Title = "Edit Genre";
+}
+
+<h2>Edit Genre</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="error-container" class="alert alert-danger" style="display: none;">
+            <strong>Error:</strong> <span id="error-message"></span>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Edit", "Genre", FormMethod.Post, new { @class = "genre-form", id = "genre-form" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.GenreID)
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.GenreName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GenreName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.GenreName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="submit-btn" value="Save" class="btn btn-primary" />
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    // Basic form validation without jQuery
+    document.getElementById('genre-form').onsubmit = function(e) {
+        var genreName = document.getElementById('@Html.IdFor(m => m.GenreName)').value;
+        if (!genreName || genreName.trim() === '') {
+            e.preventDefault();
+            document.getElementById('error-container').style.display = 'block';
+            document.getElementById('error-message').textContent = 'Genre Name is required.';
+            return false;
+        }
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').value = 'Saving...';
+        return true;
+    };
+</script> 

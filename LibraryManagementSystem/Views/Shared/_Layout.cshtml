@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Library Management System</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <style>
+        .navbar-blue {
+            background-color: #1e88e5;
+            border-color: #1565c0;
+        }
+        .navbar-blue .navbar-nav > li > a {
+            color: white;
+        }
+        .navbar-blue .navbar-nav > li > a:hover,
+        .navbar-blue .navbar-nav > li > a:focus {
+            background-color: #1565c0;
+        }
+        .navbar-blue .navbar-toggle .icon-bar {
+            background-color: white;
+        }
+        .btn-success {
+            background-color: #4CAF50;
+            border-color: #388E3C;
+        }
+        .btn-success:hover {
+            background-color: #388E3C;
+            border-color: #2E7D32;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-blue">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li><a href="@Url.Action("Index", "Book")">Books</a></li>
+                    <li><a href="@Url.Action("Index", "Genre")">Genres</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Error!</strong> @ViewBag.ErrorMessage
+            </div>
+        }
+        
+        @RenderBody()
+    </div>
+</body>
+</html> 

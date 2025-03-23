@@ -1,0 +1,1 @@
+<%@ Application Inherits="LibraryManagementSystem.MvcApplication" Language="C#" %> 

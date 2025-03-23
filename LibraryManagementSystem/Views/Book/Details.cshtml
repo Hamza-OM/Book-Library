@@ -1,0 +1,34 @@
+@model LibraryManagementSystem.Models.Book
+
+@{
+    ViewBag.Title = "Book Details";
+}
+
+<h2>Book Details</h2>
+
+<div class="card">
+    <div class="card-header">
+        <h4>@Model.Title</h4>
+    </div>
+    <div class="card-body">
+        <dl class="dl-horizontal">
+            <dt>Title</dt>
+            <dd>@Model.Title</dd>
+
+            <dt>Author</dt>
+            <dd>@Model.Author</dd>
+
+            <dt>Genre</dt>
+            <dd>@Model.GenreName</dd>
+
+            <dt>Page Count</dt>
+            <dd>@Model.PageCount</dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        <div class="btn-group">
+            @Html.ActionLink("Edit", "Edit", "Book", new { id = Model.BookID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Back to List", "Index", "Book", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,112 @@
+@model LibraryManagementSystem.Models.Book
+
+@{
+    ViewBag.Title = "Edit Book";
+}
+
+<h2>Edit Book</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="error-container" class="alert alert-danger" style="display: none;">
+            <strong>Error:</strong> <span id="error-message"></span>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Edit", "Book", FormMethod.Post, new { @class = "book-form", id = "book-form" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.BookID)
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GenreID, "Genre", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.GenreID, new SelectList(ViewBag.Genres, "GenreID", "GenreName", Model.GenreID), new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.GenreID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PageCount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PageCount, new { htmlAttributes = new { @class = "form-control", required = "required", type = "number", min = "1" } })
+                @Html.ValidationMessageFor(model => model.PageCount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="submit-btn" value="Save" class="btn btn-primary" />
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    // Basic form validation without jQuery
+    document.getElementById('book-form').onsubmit = function(e) {
+        var isValid = true;
+        var errorMessage = "";
+        
+        // Check title
+        var title = document.getElementById('@Html.IdFor(m => m.Title)').value;
+        if (!title || title.trim() === '') {
+            isValid = false;
+            errorMessage += "Title is required. ";
+        }
+        
+        // Check genre
+        var genreId = document.getElementById('@Html.IdFor(m => m.GenreID)').value;
+        if (!genreId) {
+            isValid = false;
+            errorMessage += "Genre is required. ";
+        }
+        
+        // Check author
+        var author = document.getElementById('@Html.IdFor(m => m.Author)').value;
+        if (!author || author.trim() === '') {
+            isValid = false;
+            errorMessage += "Author is required. ";
+        }
+        
+        // Check page count
+        var pageCount = document.getElementById('@Html.IdFor(m => m.PageCount)').value;
+        if (!pageCount || pageCount < 1) {
+            isValid = false;
+            errorMessage += "Page Count must be at least 1.";
+        }
+        
+        if (!isValid) {
+            e.preventDefault();
+            document.getElementById('error-container').style.display = 'block';
+            document.getElementById('error-message').textContent = errorMessage;
+            return false;
+        }
+        
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').value = 'Saving...';
+        return true;
+    };
+</script> 
